@@ -1,0 +1,131 @@
+[gd_scene load_steps=11 format=2]
+
+[ext_resource path="res://Placeholder Textures for Shards of the Past/character_soldier_rocketlauncher/particle2.png" type="Texture" id=2]
+[ext_resource path="res://Placeholder Textures for Shards of the Past/character_soldier_rocketlauncher/rocket.png" type="Texture" id=3]
+[ext_resource path="res://HomingRocket.gd" type="Script" id=4]
+[ext_resource path="res://Placeholder Textures for Shards of the Past/character_soldier_rocketlauncher/particle3.png" type="Texture" id=5]
+
+[sub_resource type="Curve" id=1]
+_data = [ Vector2( 0.0552486, 0.536364 ), 0.0, 0.0, 0, 0, Vector2( 0.983425, 0.409091 ), -1.94463, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=2]
+curve = SubResource( 1 )
+
+[sub_resource type="ParticlesMaterial" id=3]
+trail_size_modifier = SubResource( 2 )
+emission_shape = 1
+emission_sphere_radius = 2.31
+flag_disable_z = true
+gravity = Vector3( 0, 40, 0 )
+initial_velocity_random = 1.0
+angular_velocity = 10.0
+angular_velocity_random = 1.0
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+hue_variation_random = 0.2
+anim_speed_random = 0.2
+
+[sub_resource type="ParticlesMaterial" id=4]
+emission_shape = 1
+emission_sphere_radius = 1.0
+flag_disable_z = true
+direction = Vector3( 0, 0, 0 )
+spread = 150.0
+gravity = Vector3( 0, 0, 0 )
+initial_velocity = 25.0
+angular_velocity = 10.0
+angular_velocity_random = 1.0
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+
+[sub_resource type="RectangleShape2D" id=5]
+extents = Vector2( 3.49479, 2.52054 )
+
+[sub_resource type="RectangleShape2D" id=6]
+extents = Vector2( 1, 1 )
+
+[node name="Rocket" type="KinematicBody2D"]
+collision_layer = 769
+script = ExtResource( 4 )
+
+[node name="Sprite" type="Sprite" parent="."]
+position = Vector2( 1, 0.5 )
+texture = ExtResource( 3 )
+
+[node name="VisibilityNotifier2D" type="VisibilityNotifier2D" parent="."]
+visible = false
+position = Vector2( 5, 9.5 )
+scale = Vector2( 0.6, 0.35 )
+
+[node name="Trail 2" type="Particles2D" parent="."]
+position = Vector2( 0, 0.5 )
+amount = 7
+explosiveness = 0.1
+randomness = 0.1
+local_coords = false
+process_material = SubResource( 3 )
+texture = ExtResource( 5 )
+
+[node name="Trail 1" type="Particles2D" parent="."]
+position = Vector2( 0, 0.5 )
+amount = 7
+explosiveness = 0.1
+randomness = 0.1
+local_coords = false
+process_material = SubResource( 3 )
+texture = ExtResource( 2 )
+
+[node name="Explosion" type="Particles2D" parent="."]
+position = Vector2( 1, 0.5 )
+emitting = false
+amount = 25
+one_shot = true
+explosiveness = 1.0
+randomness = 0.1
+process_material = SubResource( 4 )
+texture = ExtResource( 5 )
+
+[node name="Timer" type="Timer" parent="."]
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
+position = Vector2( -4, 0 )
+enabled = true
+cast_to = Vector2( -10, 5 )
+
+[node name="RayCast2D2" type="RayCast2D" parent="."]
+position = Vector2( 5, 0 )
+enabled = true
+cast_to = Vector2( 10, 5 )
+
+[node name="RayCast2D3" type="RayCast2D" parent="."]
+position = Vector2( 4, 4 )
+enabled = true
+cast_to = Vector2( 32, 0 )
+
+[node name="RayCast2D4" type="RayCast2D" parent="."]
+position = Vector2( -3, 4 )
+enabled = true
+cast_to = Vector2( -32, 0 )
+
+[node name="RayCast2D5" type="RayCast2D" parent="."]
+position = Vector2( 1, 0 )
+enabled = true
+cast_to = Vector2( 0, 6 )
+
+[node name="Rocket" type="Area2D" parent="."]
+position = Vector2( -0.73777, -0.465427 )
+z_index = 2
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Rocket"]
+position = Vector2( 1.24298, 0.48597 )
+shape = SubResource( 5 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource( 6 )
+[connection signal="screen_exited" from="VisibilityNotifier2D" to="." method="_on_VisibilityNotifier2D_screen_exited"]
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
+[connection signal="body_entered" from="Rocket" to="." method="_on_Rocket_body_entered"]
+[connection signal="body_entered" from="Rocket" to="Rocket" method="_on_Fireball_body_entered"]

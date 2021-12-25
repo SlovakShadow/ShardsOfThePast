@@ -1,0 +1,34 @@
+[remap]
+
+importer="texture"
+type="StreamTexture"
+path="res://.import/import_error_en.png-c7b8b4770a95a31666e30487dc9b60ee.stex"
+metadata={
+"vram_texture": false
+}
+
+[deps]
+
+source_file="res://import_error_en.png"
+dest_files=[ "res://.import/import_error_en.png-c7b8b4770a95a31666e30487dc9b60ee.stex" ]
+
+[params]
+
+compress/mode=0
+compress/lossy_quality=0.7
+compress/hdr_mode=0
+compress/bptc_ldr=0
+compress/normal_map=0
+flags/repeat=0
+flags/filter=false
+flags/mipmaps=false
+flags/anisotropic=false
+flags/srgb=2
+process/fix_alpha_border=true
+process/premult_alpha=false
+process/HDR_as_SRGB=false
+process/invert_color=false
+stream=false
+size_limit=0
+detect_3d=false
+svg/scale=1.0

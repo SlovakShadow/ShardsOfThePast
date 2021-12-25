@@ -1,0 +1,138 @@
+[gd_scene load_steps=23 format=2]
+
+[ext_resource path="res://Fiery Goliath.gd" type="Script" id=1]
+[ext_resource path="res://Placeholder Textures for Shards of the Past/firerygoliath_walk/fierygoliathwalksprite_1.png" type="Texture" id=2]
+[ext_resource path="res://Placeholder Textures for Shards of the Past/firerygoliath_walk/fierygoliathwalksprite_3.png" type="Texture" id=3]
+[ext_resource path="res://Placeholder Textures for Shards of the Past/firerygoliath_walk/fierygoliathwalksprite_2.png" type="Texture" id=4]
+[ext_resource path="res://Placeholder Textures for Shards of the Past/firerygoliath_walk/fierygoliathwalksprite_0.png" type="Texture" id=5]
+[ext_resource path="res://Placeholder Textures for Shards of the Past/fierygoliath_spit/fierygoliathspitprepsprite_2.png" type="Texture" id=6]
+[ext_resource path="res://Placeholder Textures for Shards of the Past/fierygoliath_spit/fierygoliathspitprepsprite_3.png" type="Texture" id=7]
+[ext_resource path="res://Placeholder Textures for Shards of the Past/fierygoliath_spit/fierygoliathspitprepsprite_0.png" type="Texture" id=8]
+[ext_resource path="res://Placeholder Textures for Shards of the Past/fierygoliath_spit/fierygoliathspitprepsprite_1.png" type="Texture" id=9]
+[ext_resource path="res://Placeholder Textures for Shards of the Past/debug.png" type="Texture" id=10]
+[ext_resource path="res://Placeholder Textures for Shards of the Past/fierygoliath_stomp/fierygoliathstompsprite_1.png" type="Texture" id=11]
+[ext_resource path="res://Placeholder Textures for Shards of the Past/fierygoliath_stomp/fierygoliathstompsprite_0.png" type="Texture" id=12]
+[ext_resource path="res://Placeholder Textures for Shards of the Past/fierygoliath_stomp/fierygoliathstompsprite_2.png" type="Texture" id=13]
+[ext_resource path="res://Placeholder Textures for Shards of the Past/fierygoliath_stomp/fierygoliathstompsprite_3.png" type="Texture" id=14]
+[ext_resource path="res://Placeholder Textures for Shards of the Past/fiery_goliath/fierygoliath_death_5.png" type="Texture" id=15]
+[ext_resource path="res://Placeholder Textures for Shards of the Past/fiery_goliath/fierygoliath_death_2.png" type="Texture" id=16]
+[ext_resource path="res://Placeholder Textures for Shards of the Past/fiery_goliath/fierygoliath_death_1.png" type="Texture" id=17]
+[ext_resource path="res://Placeholder Textures for Shards of the Past/fiery_goliath/fierygoliath_death_4.png" type="Texture" id=18]
+[ext_resource path="res://Placeholder Textures for Shards of the Past/fiery_goliath/fierygoliath_death_3.png" type="Texture" id=19]
+
+[sub_resource type="SpriteFrames" id=1]
+animations = [ {
+"frames": [ ExtResource( 4 ) ],
+"loop": true,
+"name": "idle",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 15 ) ],
+"loop": true,
+"name": "dead",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 5 ), ExtResource( 2 ), ExtResource( 4 ), ExtResource( 3 ) ],
+"loop": true,
+"name": "walk",
+"speed": 6.0
+}, {
+"frames": [ ExtResource( 12 ), ExtResource( 11 ) ],
+"loop": false,
+"name": "jump",
+"speed": 4.0
+}, {
+"frames": [ ExtResource( 13 ), ExtResource( 14 ) ],
+"loop": false,
+"name": "stomp",
+"speed": 4.0
+}, {
+"frames": [ ExtResource( 17 ), ExtResource( 16 ), ExtResource( 19 ), ExtResource( 18 ), ExtResource( 15 ) ],
+"loop": true,
+"name": "dying",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 8 ), ExtResource( 9 ), ExtResource( 6 ), ExtResource( 7 ), ExtResource( 6 ), ExtResource( 9 ), ExtResource( 8 ) ],
+"loop": false,
+"name": "spit_prep",
+"speed": 6.0
+} ]
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 12.056, 12 )
+
+[sub_resource type="RectangleShape2D" id=3]
+extents = Vector2( 48, 12 )
+
+[node name="Fiery Goliath" type="KinematicBody2D"]
+script = ExtResource( 1 )
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+frames = SubResource( 1 )
+animation = "spit_prep"
+frame = 6
+playing = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 0, 2 )
+shape = SubResource( 2 )
+
+[node name="Position2D" type="Position2D" parent="."]
+position = Vector2( 15, 0 )
+
+[node name="Timer" type="Timer" parent="."]
+
+[node name="Timer2" type="Timer" parent="."]
+one_shot = true
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2( 60, 2 )
+shape = SubResource( 3 )
+
+[node name="debug" type="Sprite" parent="Area2D"]
+visible = false
+position = Vector2( 25, 2 )
+scale = Vector2( 26, 24 )
+texture = ExtResource( 10 )
+
+[node name="Label_debug" type="Label" parent="."]
+visible = false
+margin_left = -12.0
+margin_top = -24.0
+margin_right = 12.0
+margin_bottom = -10.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Timer3" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+
+[node name="Timer4" type="Timer" parent="."]
+wait_time = 5.0
+autostart = true
+
+[node name="Timer6" type="Timer" parent="."]
+wait_time = 2.0
+
+[node name="Timer5" type="Timer" parent="."]
+wait_time = 1.5
+one_shot = true
+
+[node name="Timer7" type="Timer" parent="."]
+
+[node name="Timer8" type="Timer" parent="."]
+wait_time = 0.2
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
+[connection signal="timeout" from="Timer2" to="." method="_on_Timer2_timeout"]
+[connection signal="body_entered" from="Area2D" to="." method="_on_Area2D_body_entered"]
+[connection signal="body_exited" from="Area2D" to="." method="_on_Area2D_body_exited"]
+[connection signal="timeout" from="Timer3" to="." method="_on_Timer3_timeout"]
+[connection signal="timeout" from="Timer4" to="." method="_on_Timer4_timeout"]
+[connection signal="timeout" from="Timer6" to="." method="_on_Timer6_timeout"]
+[connection signal="timeout" from="Timer5" to="." method="_on_Timer5_timeout"]
+[connection signal="timeout" from="Timer7" to="." method="_on_Timer7_timeout"]
+[connection signal="timeout" from="Timer8" to="." method="_on_Timer8_timeout"]

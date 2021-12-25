@@ -1,0 +1,140 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Placeholder Textures for Shards of the Past/desert_tileset.png" type="Texture" id=1]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="11" type="Sprite" parent="."]
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 96, 0, 16, 16 )
+
+[node name="12" type="Sprite" parent="."]
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 48, 16, 16, 16 )
+
+[node name="13" type="Sprite" parent="."]
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 256, 64, 16, 16 )
+
+[node name="14" type="Sprite" parent="."]
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 48, 32, 16, 16 )
+
+[node name="15" type="Sprite" parent="."]
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 48, 48, 16, 16 )
+
+[node name="16" type="Sprite" parent="."]
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 32, 112, 16, 16 )
+
+[node name="17" type="Sprite" parent="."]
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 16, 112, 16, 16 )
+
+[node name="18" type="Sprite" parent="."]
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 64, 0, 16, 16 )
+
+[node name="19" type="Sprite" parent="."]
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 80, 0, 16, 16 )
+
+[node name="20" type="Sprite" parent="."]
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 64, 16, 16, 16 )
+
+[node name="21" type="Sprite" parent="."]
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 80, 16, 16, 16 )
+
+[node name="22" type="Sprite" parent="."]
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 64, 32, 16, 16 )
+
+[node name="23" type="Sprite" parent="."]
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 80, 32, 16, 16 )
+
+[node name="24" type="Sprite" parent="."]
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 64, 48, 16, 16 )
+
+[node name="25" type="Sprite" parent="."]
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 80, 48, 16, 16 )
+
+[node name="26" type="Sprite" parent="."]
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 80, 64, 16, 16 )
+
+[node name="27" type="Sprite" parent="."]
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 64, 64, 16, 16 )
+
+[node name="28" type="Sprite" parent="."]
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 224, 80, 16, 16 )
+
+[node name="29" type="Sprite" parent="."]
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 240, 96, 16, 16 )
+
+[node name="30" type="Sprite" parent="."]
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 224, 96, 16, 16 )
+
+[node name="31" type="Sprite" parent="."]
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 240, 80, 16, 16 )
+
+[node name="32" type="Sprite" parent="."]
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 240, 48, 16, 16 )
+
+[node name="33" type="Sprite" parent="."]
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 256, 48, 16, 16 )
+
+[node name="34" type="Sprite" parent="."]
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 224, 64, 16, 16 )
+
+[node name="35" type="Sprite" parent="."]
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 240, 64, 16, 16 )
+
+[node name="36" type="Sprite" parent="."]
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 0, 32, 48, 80 )
+
+[node name="37" type="Sprite" parent="."]
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 144, 112, 16, 16 )

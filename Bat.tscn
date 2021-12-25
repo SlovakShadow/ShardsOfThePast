@@ -1,0 +1,91 @@
+[gd_scene load_steps=16 format=2]
+
+[ext_resource path="res://Placeholder Textures for Shards of the Past/bat_sprites/batsprite_2.png" type="Texture" id=1]
+[ext_resource path="res://Placeholder Textures for Shards of the Past/bat_bite/batbitesprite_3.png" type="Texture" id=2]
+[ext_resource path="res://Placeholder Textures for Shards of the Past/bat_bite/batbitesprite_1.png" type="Texture" id=3]
+[ext_resource path="res://Placeholder Textures for Shards of the Past/bat_bite/batbitesprite_0.png" type="Texture" id=4]
+[ext_resource path="res://Placeholder Textures for Shards of the Past/bat_bite/batbitesprite_2.png" type="Texture" id=5]
+[ext_resource path="res://Placeholder Textures for Shards of the Past/bat_sprites/bat_hurt.png" type="Texture" id=6]
+[ext_resource path="res://Placeholder Textures for Shards of the Past/bat_sprites/batsprite_3.png" type="Texture" id=14]
+[ext_resource path="res://Placeholder Textures for Shards of the Past/bat_sprites/batsprite_1.png" type="Texture" id=15]
+[ext_resource path="res://Placeholder Textures for Shards of the Past/bat_sprites/batsprite_0.png" type="Texture" id=16]
+[ext_resource path="res://Placeholder Textures for Shards of the Past/bat_sprites/batsprite_5.png" type="Texture" id=17]
+[ext_resource path="res://Bat.gd" type="Script" id=18]
+
+[sub_resource type="SpriteFrames" id=1]
+animations = [ {
+"frames": [ ExtResource( 17 ) ],
+"loop": false,
+"name": "idle",
+"speed": 0.0
+}, {
+"frames": [ ExtResource( 4 ), ExtResource( 3 ), ExtResource( 5 ), ExtResource( 2 ), ExtResource( 1 ), ExtResource( 15 ) ],
+"loop": true,
+"name": "attack",
+"speed": 12.0
+}, {
+"frames": [ ExtResource( 16 ), ExtResource( 15 ), ExtResource( 1 ), ExtResource( 14 ), ExtResource( 1 ), ExtResource( 15 ) ],
+"loop": true,
+"name": "flight",
+"speed": 10.0
+}, {
+"frames": [ ExtResource( 6 ) ],
+"loop": true,
+"name": "hurt",
+"speed": 5.0
+} ]
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 12, 7 )
+
+[sub_resource type="CircleShape2D" id=3]
+radius = 120.004
+
+[sub_resource type="CircleShape2D" id=4]
+radius = 8.0
+
+[node name="Bat" type="KinematicBody2D"]
+script = ExtResource( 18 )
+
+[node name="Timer3" type="Timer" parent="."]
+autostart = true
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+position = Vector2( 0, 1 )
+frames = SubResource( 1 )
+animation = "flight"
+frame = 2
+playing = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+shape = SubResource( 2 )
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+
+[node name="Area2D - Detect Player" type="Area2D" parent="."]
+visible = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D - Detect Player"]
+position = Vector2( 0, 1 )
+shape = SubResource( 3 )
+
+[node name="Area2D - Hurt Area" type="Area2D" parent="."]
+position = Vector2( -10, 4 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D - Hurt Area"]
+shape = SubResource( 4 )
+
+[node name="Timer2" type="Timer" parent="."]
+wait_time = 0.75
+[connection signal="timeout" from="Timer3" to="." method="_on_Timer3_timeout"]
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
+[connection signal="body_entered" from="Area2D - Detect Player" to="." method="_on_Area2D_body_entered"]
+[connection signal="body_exited" from="Area2D - Detect Player" to="." method="_on_Area2D_body_exited"]
+[connection signal="body_entered" from="Area2D - Hurt Area" to="." method="_on_Area2D__Hurt_Area_body_entered"]
+[connection signal="timeout" from="Timer2" to="." method="_on_Timer2_timeout"]

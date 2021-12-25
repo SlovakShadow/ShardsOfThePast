@@ -1,0 +1,35 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://Placeholder Textures for Shards of the Past/blightspitter/blightspitter_0.png" type="Texture" id=1]
+[ext_resource path="res://Placeholder Textures for Shards of the Past/blightspitter/blightspitter_2.png" type="Texture" id=2]
+[ext_resource path="res://Placeholder Textures for Shards of the Past/blightspitter/blightspitter_1.png" type="Texture" id=3]
+[ext_resource path="res://Blightspitter.gd" type="Script" id=4]
+
+[sub_resource type="SpriteFrames" id=1]
+animations = [ {
+"frames": [ ExtResource( 1 ), ExtResource( 2 ) ],
+"loop": true,
+"name": "idle",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 3 ), ExtResource( 2 ) ],
+"loop": true,
+"name": "spit",
+"speed": 5.0
+} ]
+
+[node name="Blightspitter" type="KinematicBody2D"]
+input_pickable = true
+script = ExtResource( 4 )
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+frames = SubResource( 1 )
+animation = "spit"
+frame = 1
+playing = true
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+visible = false
+polygon = PoolVector2Array( -12, 12, 12, 12, 5, -5, -5, -5 )
+
+[node name="Position2D" type="Position2D" parent="."]

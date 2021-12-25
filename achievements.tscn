@@ -1,0 +1,315 @@
+[gd_scene load_steps=34 format=2]
+
+[ext_resource path="res://CRTShader.shader" type="Shader" id=1]
+[ext_resource path="res://Placeholder Textures for Shards of the Past/white.png" type="Texture" id=2]
+[ext_resource path="res://Placeholder Textures for Shards of the Past/CRTFrame.png" type="Texture" id=3]
+[ext_resource path="res://Placeholder Textures for Shards of the Past/sotp_startscreen_nologo.png" type="Texture" id=4]
+[ext_resource path="res://Placeholder Textures for Shards of the Past/sotp_back.png" type="Texture" id=5]
+[ext_resource path="res://Placeholder Textures for Shards of the Past/sotp_back_pressed.png" type="Texture" id=6]
+[ext_resource path="res://Placeholder Textures for Shards of the Past/achievements_text.png" type="Texture" id=7]
+[ext_resource path="res://Placeholder Textures for Shards of the Past/achievements/fast_and_slashing-unlocked.png" type="Texture" id=8]
+[ext_resource path="res://TitleScreen.gd" type="Script" id=9]
+[ext_resource path="res://Placeholder Textures for Shards of the Past/achievements/fast_and_slashing-text-unlocked.png" type="Texture" id=10]
+[ext_resource path="res://Placeholder Textures for Shards of the Past/achievements/into_the_stratosphere-text-unlocked.png" type="Texture" id=11]
+[ext_resource path="res://Placeholder Textures for Shards of the Past/achievements/extinguished-unlocked.png" type="Texture" id=12]
+[ext_resource path="res://Placeholder Textures for Shards of the Past/achievements/extinguished-text-unlocked.png" type="Texture" id=13]
+[ext_resource path="res://Placeholder Textures for Shards of the Past/achievements/into_the_stratosphere-unlocked.png" type="Texture" id=14]
+[ext_resource path="res://Placeholder Textures for Shards of the Past/achievements/into_the_stratosphere-text-locked.png" type="Texture" id=15]
+[ext_resource path="res://Placeholder Textures for Shards of the Past/achievements/extinguished-text-locked.png" type="Texture" id=16]
+[ext_resource path="res://Placeholder Textures for Shards of the Past/achievements/fast_and_slashing-locked.png" type="Texture" id=17]
+[ext_resource path="res://Placeholder Textures for Shards of the Past/achievements/extinguished-locked.png" type="Texture" id=18]
+[ext_resource path="res://Placeholder Textures for Shards of the Past/achievements/into_the_stratosphere-locked.png" type="Texture" id=19]
+[ext_resource path="res://Placeholder Textures for Shards of the Past/achievements/fast_and_slashing-text-locked.png" type="Texture" id=20]
+[ext_resource path="res://Placeholder Textures for Shards of the Past/achievements/going_ballistic-text-locked.png" type="Texture" id=21]
+[ext_resource path="res://Placeholder Textures for Shards of the Past/achievements/going_ballistic-locked.png" type="Texture" id=22]
+[ext_resource path="res://Placeholder Textures for Shards of the Past/achievements/eyeronic-text-locked.png" type="Texture" id=23]
+[ext_resource path="res://Placeholder Textures for Shards of the Past/achievements/eyeronic-locked.png" type="Texture" id=24]
+[ext_resource path="res://Placeholder Textures for Shards of the Past/achievements/squidgame_locked.png" type="Texture" id=25]
+[ext_resource path="res://Placeholder Textures for Shards of the Past/achievements/squidgame-text-locked.png" type="Texture" id=26]
+
+[sub_resource type="Shader" id=1]
+code = "shader_type canvas_item;
+
+uniform float BarrelPower = 1.1;
+
+vec2 distort(vec2 p) 
+{
+
+	float angle = p.y / p.x;
+	float theta = atan(p.y,p.x);
+	float radius = pow(length(p), BarrelPower);
+	
+	p.x = radius * cos(theta);
+	p.y = radius * sin(theta);
+	
+	return 0.5 * (p + vec2(1.0,1.0));
+}
+void fragment()
+{
+	
+vec2 xy = SCREEN_UV * 2.0;
+xy.x -= 1.0;
+xy.y -= 1.0;
+
+float d = length(xy);
+if(d < 1.5){
+	xy = distort(xy);
+}
+else{
+	xy = SCREEN_UV;
+}
+COLOR = texture(SCREEN_TEXTURE,xy);
+}
+
+
+
+"
+
+[sub_resource type="ShaderMaterial" id=2]
+shader = SubResource( 1 )
+shader_param/BarrelPower = 1.1
+
+[sub_resource type="Shader" id=3]
+code = "shader_type canvas_item;
+
+uniform float color_bleeding = 0.9;
+uniform float bleeding_range = 2;
+uniform float screen_width = 1024;
+void fragment()
+{
+	float pixel_size = 1.0/screen_width*bleeding_range;
+	vec4 color_left = texture(SCREEN_TEXTURE,SCREEN_UV - vec2(pixel_size, 0));
+	vec4 current_color = texture(SCREEN_TEXTURE,SCREEN_UV);
+	current_color = current_color*vec4(color_bleeding,0.5,0.25,1);
+	color_left = color_left*vec4(0.25,0.5,color_bleeding,1);
+	COLOR.rgba = (current_color + color_left);
+}"
+
+[sub_resource type="ShaderMaterial" id=4]
+shader = SubResource( 3 )
+shader_param/color_bleeding = 0.9
+shader_param/bleeding_range = 2.0
+shader_param/screen_width = 1024.0
+
+[sub_resource type="Shader" id=5]
+code = "shader_type canvas_item;
+
+uniform float lines_distance = 4.0;
+uniform float pixel_size = 2.0;
+uniform float size_screen = 600;
+uniform float scanline_alpha = 0.9;
+uniform float lines_velocity = 30.0;
+
+void fragment()
+{
+	float line_row = floor((SCREEN_UV.y * size_screen/pixel_size) + mod(TIME*lines_velocity, lines_distance));
+
+	float n = 1.0 - ceil((mod(line_row,lines_distance)/lines_distance));
+
+vec4 c = texture(SCREEN_TEXTURE,SCREEN_UV);
+c = c - n*c*(1.0 - scanline_alpha);
+c.a = 1.0;
+COLOR = c;
+}"
+
+[sub_resource type="ShaderMaterial" id=6]
+shader = SubResource( 5 )
+shader_param/lines_distance = 4.0
+shader_param/pixel_size = 2.0
+shader_param/size_screen = 600.0
+shader_param/scanline_alpha = 0.9
+shader_param/lines_velocity = 30.0
+
+[sub_resource type="ShaderMaterial" id=7]
+shader = ExtResource( 1 )
+shader_param/BarrelPower = 1.05
+
+[node name="achievements" type="Node2D"]
+script = ExtResource( 9 )
+
+[node name="Sprite" type="Sprite" parent="."]
+position = Vector2( 160, 90 )
+texture = ExtResource( 4 )
+
+[node name="Sprite2" type="Sprite" parent="."]
+position = Vector2( 160, 16 )
+texture = ExtResource( 7 )
+
+[node name="A1" type="Node2D" parent="."]
+position = Vector2( -13, 0 )
+
+[node name="sprite1" type="Sprite" parent="A1"]
+position = Vector2( 36, 48 )
+texture = ExtResource( 18 )
+
+[node name="txt1" type="Sprite" parent="A1"]
+position = Vector2( 86, 48 )
+texture = ExtResource( 16 )
+
+[node name="sprite2" type="Sprite" parent="A1"]
+position = Vector2( 36, 88 )
+texture = ExtResource( 19 )
+
+[node name="txt2" type="Sprite" parent="A1"]
+position = Vector2( 86, 88 )
+texture = ExtResource( 15 )
+
+[node name="sprite3" type="Sprite" parent="A1"]
+position = Vector2( 36, 128 )
+texture = ExtResource( 17 )
+
+[node name="txt3" type="Sprite" parent="A1"]
+position = Vector2( 86, 128 )
+texture = ExtResource( 20 )
+
+[node name="A2" type="Node2D" parent="."]
+position = Vector2( 91, 0 )
+
+[node name="sprite1" type="Sprite" parent="A2"]
+position = Vector2( 36, 48 )
+texture = ExtResource( 22 )
+
+[node name="txt1" type="Sprite" parent="A2"]
+position = Vector2( 86, 48 )
+texture = ExtResource( 21 )
+
+[node name="sprite2" type="Sprite" parent="A2"]
+position = Vector2( 36, 88 )
+texture = ExtResource( 24 )
+
+[node name="txt2" type="Sprite" parent="A2"]
+position = Vector2( 86, 88 )
+texture = ExtResource( 23 )
+
+[node name="sprite3" type="Sprite" parent="A2"]
+position = Vector2( 36, 128 )
+texture = ExtResource( 25 )
+
+[node name="txt3" type="Sprite" parent="A2"]
+position = Vector2( 86, 128 )
+texture = ExtResource( 26 )
+
+[node name="A3" type="Node2D" parent="."]
+visible = false
+position = Vector2( 195, 0 )
+
+[node name="sprite1" type="Sprite" parent="A3"]
+position = Vector2( 36, 48 )
+texture = ExtResource( 12 )
+
+[node name="txt1" type="Sprite" parent="A3"]
+position = Vector2( 86, 48 )
+texture = ExtResource( 13 )
+
+[node name="sprite2" type="Sprite" parent="A3"]
+position = Vector2( 36, 88 )
+texture = ExtResource( 14 )
+
+[node name="txt2" type="Sprite" parent="A3"]
+position = Vector2( 86, 88 )
+texture = ExtResource( 11 )
+
+[node name="sprite3" type="Sprite" parent="A3"]
+position = Vector2( 36, 128 )
+texture = ExtResource( 8 )
+
+[node name="txt3" type="Sprite" parent="A3"]
+position = Vector2( 86, 128 )
+texture = ExtResource( 10 )
+
+[node name="Control" type="Control" parent="."]
+margin_left = -158.533
+margin_top = -91.3579
+margin_right = -118.533
+margin_bottom = -51.3579
+mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Shaders" type="Control" parent="Control"]
+margin_right = 40.0
+margin_bottom = 40.0
+mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Curvature" type="TextureRect" parent="Control/Shaders"]
+visible = false
+material = SubResource( 2 )
+margin_left = -161.467
+margin_top = 91.3579
+margin_right = 158.533
+margin_bottom = 271.358
+texture = ExtResource( 2 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorBleeding" type="TextureRect" parent="Control/Shaders"]
+material = SubResource( 4 )
+margin_left = -193.467
+margin_top = 107.358
+margin_right = 150.533
+margin_bottom = 263.358
+texture = ExtResource( 2 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ScanLine" type="TextureRect" parent="Control/Shaders"]
+material = SubResource( 6 )
+margin_left = 158.533
+margin_top = 92.3579
+margin_right = 478.533
+margin_bottom = 271.358
+texture = ExtResource( 2 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CRT" type="TextureRect" parent="Control/Shaders"]
+material = SubResource( 7 )
+margin_left = 158.533
+margin_top = 91.3579
+margin_right = 478.533
+margin_bottom = 271.358
+texture = ExtResource( 2 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CRTFrame" type="TextureRect" parent="Control"]
+margin_left = 158.0
+margin_top = 91.0
+margin_right = 498.0
+margin_bottom = 334.0
+rect_scale = Vector2( 0.946396, 0.738916 )
+mouse_filter = 2
+texture = ExtResource( 3 )
+expand = true
+stretch_mode = 4
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+margin_left = 96.0
+margin_top = 156.0
+margin_right = 224.0
+margin_bottom = 176.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="back" type="TextureButton" parent="VBoxContainer"]
+margin_right = 128.0
+margin_bottom = 20.0
+texture_normal = ExtResource( 5 )
+texture_pressed = ExtResource( 6 )
+[connection signal="pressed" from="VBoxContainer/back" to="." method="_on_back_pressed"]

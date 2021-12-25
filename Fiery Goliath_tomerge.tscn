@@ -1,0 +1,72 @@
+[gd_scene load_steps=13 format=2]
+
+[ext_resource path="res://Fiery Goliath.gd" type="Script" id=1]
+[ext_resource path="res://Placeholder Textures for Shards of the Past/firerygoliath_walk/fierygoliathwalksprite_1.png" type="Texture" id=2]
+[ext_resource path="res://Placeholder Textures for Shards of the Past/firerygoliath_walk/fierygoliathwalksprite_3.png" type="Texture" id=3]
+[ext_resource path="res://Placeholder Textures for Shards of the Past/firerygoliath_walk/fierygoliathwalksprite_2.png" type="Texture" id=4]
+[ext_resource path="res://Placeholder Textures for Shards of the Past/firerygoliath_walk/fierygoliathwalksprite_0.png" type="Texture" id=5]
+[ext_resource path="res://Placeholder Textures for Shards of the Past/fierygoliath_spit/fierygoliathspitprepsprite_2.png" type="Texture" id=6]
+[ext_resource path="res://Placeholder Textures for Shards of the Past/fierygoliath_spit/fierygoliathspitprepsprite_3.png" type="Texture" id=7]
+[ext_resource path="res://Placeholder Textures for Shards of the Past/fierygoliath_spit/fierygoliathspitprepsprite_0.png" type="Texture" id=8]
+[ext_resource path="res://Placeholder Textures for Shards of the Past/fierygoliath_spit/fierygoliathspitprepsprite_1.png" type="Texture" id=9]
+
+[sub_resource type="SpriteFrames" id=1]
+animations = [ {
+"frames": [ ExtResource( 4 ) ],
+"loop": true,
+"name": "idle",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 8 ), ExtResource( 9 ), ExtResource( 6 ), ExtResource( 7 ) ],
+"loop": false,
+"name": "spit_prep",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 6 ), ExtResource( 9 ), ExtResource( 8 ) ],
+"loop": false,
+"name": "spit_after",
+"speed": 5.0
+}, {
+"frames": [  ],
+"loop": true,
+"name": "hurt",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 5 ), ExtResource( 2 ), ExtResource( 4 ), ExtResource( 3 ) ],
+"loop": true,
+"name": "walk",
+"speed": 6.0
+} ]
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 12.056, 12 )
+
+[sub_resource type="RectangleShape2D" id=3]
+extents = Vector2( 25, 12 )
+
+[node name="Fiery Goliath" type="KinematicBody2D"]
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+frames = SubResource( 1 )
+animation = "hurt"
+playing = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 0, 2 )
+shape = SubResource( 2 )
+
+[node name="Position2D" type="Position2D" parent="."]
+position = Vector2( 12, 0 )
+
+[node name="Timer" type="Timer" parent="."]
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2( 25, 2 )
+shape = SubResource( 3 )
+[connection signal="body_entered" from="Area2D" to="." method="_on_Area2D_body_entered"]
