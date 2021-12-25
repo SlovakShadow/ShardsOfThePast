@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/milcamp_ambient.ogg-d5b6eca2c2c446c1b7e103eb4f7745ef.oggstr"
+
+[deps]
+
+source_file="res://sfx/milcamp_ambient.ogg"
+dest_files=[ "res://.import/milcamp_ambient.ogg-d5b6eca2c2c446c1b7e103eb4f7745ef.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

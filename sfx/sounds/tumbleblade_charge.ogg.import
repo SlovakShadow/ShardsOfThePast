@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/tumbleblade_charge.ogg-b8a287bc4cfbfce78e8ce3a7aa06fc12.oggstr"
+
+[deps]
+
+source_file="res://sfx/sounds/tumbleblade_charge.ogg"
+dest_files=[ "res://.import/tumbleblade_charge.ogg-b8a287bc4cfbfce78e8ce3a7aa06fc12.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

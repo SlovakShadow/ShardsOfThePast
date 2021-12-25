@@ -1,0 +1,101 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Placeholder Textures for Shards of the Past/tileset_lab.png" type="Texture" id=1]
+[ext_resource path="res://Placeholder Textures for Shards of the Past/tutorialspritesheet.png" type="Texture" id=2]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Background Wall" type="Sprite" parent="."]
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 128, 112, 16, 16 )
+
+[node name="Hint PC 1" type="Sprite" parent="."]
+texture = ExtResource( 2 )
+region_enabled = true
+region_rect = Rect2( 0, 0, 64, 48 )
+
+[node name="Hint PC 2" type="Sprite" parent="."]
+texture = ExtResource( 2 )
+region_enabled = true
+region_rect = Rect2( 64, 0, 64, 48 )
+
+[node name="Hint PC 3" type="Sprite" parent="."]
+texture = ExtResource( 2 )
+region_enabled = true
+region_rect = Rect2( 128, 0, 64, 48 )
+
+[node name="Hint PC 4" type="Sprite" parent="."]
+texture = ExtResource( 2 )
+region_enabled = true
+region_rect = Rect2( 192, 0, 64, 48 )
+
+[node name="Hint PC 5" type="Sprite" parent="."]
+texture = ExtResource( 2 )
+region_enabled = true
+region_rect = Rect2( 0, 48, 64, 48 )
+
+[node name="Hint PC 6" type="Sprite" parent="."]
+texture = ExtResource( 2 )
+region_enabled = true
+region_rect = Rect2( 64, 48, 64, 32 )
+
+[node name="Hint PC 7" type="Sprite" parent="."]
+texture = ExtResource( 2 )
+region_enabled = true
+region_rect = Rect2( 128, 48, 64, 48 )
+
+[node name="Hint PC 8" type="Sprite" parent="."]
+position = Vector2( -54.7329, 3.21958 )
+texture = ExtResource( 2 )
+region_enabled = true
+region_rect = Rect2( 128, 96, 64, 48 )
+
+[node name="Hint PC 9" type="Sprite" parent="."]
+position = Vector2( 70.6161, 26.8298 )
+texture = ExtResource( 2 )
+region_enabled = true
+region_rect = Rect2( 0, 48, 64, 48 )
+
+[node name="Hint PC 10" type="Sprite" parent="."]
+position = Vector2( -9.22947, 34.3422 )
+texture = ExtResource( 2 )
+region_enabled = true
+region_rect = Rect2( 192, 96, 64, 48 )
+
+[node name="Hint PC 11" type="Sprite" parent="."]
+position = Vector2( 68.4698, 1.07319 )
+texture = ExtResource( 2 )
+region_enabled = true
+region_rect = Rect2( 256, 0, 64, 64 )
+
+[node name="Hint PC 12" type="Sprite" parent="."]
+position = Vector2( 68.4698, 1.07319 )
+texture = ExtResource( 2 )
+region_enabled = true
+region_rect = Rect2( 256, 64, 64, 48 )
+
+[node name="Alert" type="Sprite" parent="."]
+texture = ExtResource( 2 )
+region_enabled = true
+region_rect = Rect2( 192, 48, 64, 48 )
+
+[node name="Alert2" type="Sprite" parent="."]
+texture = ExtResource( 2 )
+region_enabled = true
+region_rect = Rect2( 64, 80, 64, 48 )
+
+[node name="Ladder 1" type="Sprite" parent="."]
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 112, 80, 16, 16 )
+
+[node name="Ladder 2" type="Sprite" parent="."]
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 112, 64, 16, 16 )
+
+[node name="Ladder 3" type="Sprite" parent="."]
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 112, 96, 16, 16 )

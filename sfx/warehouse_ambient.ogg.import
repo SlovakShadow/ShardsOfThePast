@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/warehouse_ambient.ogg-6dfe0e670684c1bc3e4b36e9f329ea82.oggstr"
+
+[deps]
+
+source_file="res://sfx/warehouse_ambient.ogg"
+dest_files=[ "res://.import/warehouse_ambient.ogg-6dfe0e670684c1bc3e4b36e9f329ea82.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

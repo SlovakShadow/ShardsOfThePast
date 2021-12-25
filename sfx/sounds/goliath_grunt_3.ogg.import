@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/goliath_grunt_3.ogg-e69f44929f49e1ab6fda8bbbf1e445a2.oggstr"
+
+[deps]
+
+source_file="res://sfx/sounds/goliath_grunt_3.ogg"
+dest_files=[ "res://.import/goliath_grunt_3.ogg-e69f44929f49e1ab6fda8bbbf1e445a2.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

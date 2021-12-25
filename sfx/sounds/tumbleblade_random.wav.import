@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/tumbleblade_random.wav-f773afab601baf20e562ab79cf94805a.sample"
+
+[deps]
+
+source_file="res://sfx/sounds/tumbleblade_random.wav"
+dest_files=[ "res://.import/tumbleblade_random.wav-f773afab601baf20e562ab79cf94805a.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0
