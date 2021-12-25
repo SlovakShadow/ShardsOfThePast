@@ -1,0 +1,116 @@
+[gd_scene load_steps=19 format=2]
+
+[ext_resource path="res://Placeholder Textures for Shards of the Past/tumbleblade/tumbleblade_base.png" type="Texture" id=1]
+[ext_resource path="res://Placeholder Textures for Shards of the Past/tumbleblade/tumbleblade_charge_4.png" type="Texture" id=2]
+[ext_resource path="res://Placeholder Textures for Shards of the Past/tumbleblade/tumbleblade_roll_2.png" type="Texture" id=3]
+[ext_resource path="res://Placeholder Textures for Shards of the Past/tumbleblade/tumbleblade_roll_3.png" type="Texture" id=4]
+[ext_resource path="res://Placeholder Textures for Shards of the Past/tumbleblade/tumbleblade_charge_1.png" type="Texture" id=5]
+[ext_resource path="res://Placeholder Textures for Shards of the Past/tumbleblade/tumbleblade_charge_2.png" type="Texture" id=6]
+[ext_resource path="res://Placeholder Textures for Shards of the Past/tumbleblade/tumbleblade_roll_1.png" type="Texture" id=7]
+[ext_resource path="res://Placeholder Textures for Shards of the Past/tumbleblade/tumbleblade_charge_3.png" type="Texture" id=8]
+[ext_resource path="res://Tumbleblade.gd" type="Script" id=9]
+[ext_resource path="res://Placeholder Textures for Shards of the Past/tumbleblade/tumbleblade_hurt.png" type="Texture" id=10]
+[ext_resource path="res://Placeholder Textures for Shards of the Past/tumbleblade/tumbleblade_death_1.png" type="Texture" id=11]
+[ext_resource path="res://Placeholder Textures for Shards of the Past/tumbleblade/tumbleblade_death_2.png" type="Texture" id=12]
+[ext_resource path="res://Placeholder Textures for Shards of the Past/tumbleblade/tumbleblade_death_4.png" type="Texture" id=13]
+[ext_resource path="res://Placeholder Textures for Shards of the Past/tumbleblade/tumbleblade_death_3.png" type="Texture" id=14]
+[ext_resource path="res://Placeholder Textures for Shards of the Past/tumbleblade/tumbleblade_death_5.png" type="Texture" id=15]
+
+[sub_resource type="CircleShape2D" id=1]
+radius = 12.0
+
+[sub_resource type="SpriteFrames" id=2]
+animations = [ {
+"frames": [ ExtResource( 10 ) ],
+"loop": true,
+"name": "hurt",
+"speed": 6.0
+}, {
+"frames": [ ExtResource( 15 ) ],
+"loop": true,
+"name": "dead",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 1 ), ExtResource( 5 ), ExtResource( 6 ), ExtResource( 8 ), ExtResource( 2 ) ],
+"loop": true,
+"name": "charge",
+"speed": 10.0
+}, {
+"frames": [ ExtResource( 8 ), ExtResource( 2 ) ],
+"loop": true,
+"name": "vicious_roll",
+"speed": 10.0
+}, {
+"frames": [ ExtResource( 1 ), ExtResource( 7 ), ExtResource( 3 ), ExtResource( 4 ) ],
+"loop": true,
+"name": "roll",
+"speed": 15.0
+}, {
+"frames": [ ExtResource( 8 ), ExtResource( 2 ), ExtResource( 6 ), ExtResource( 4 ) ],
+"loop": true,
+"name": "uncharge",
+"speed": 10.0
+}, {
+"frames": [ ExtResource( 11 ), ExtResource( 12 ), ExtResource( 14 ), ExtResource( 13 ), ExtResource( 15 ) ],
+"loop": true,
+"name": "dying",
+"speed": 5.0
+} ]
+
+[sub_resource type="CircleShape2D" id=3]
+radius = 17.0294
+
+[node name="Tumbleblade" type="KinematicBody2D"]
+script = ExtResource( 9 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource( 1 )
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+frames = SubResource( 2 )
+animation = "dying"
+frame = 2
+playing = true
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
+visible = false
+enabled = true
+cast_to = Vector2( -13, 0 )
+
+[node name="RayCast2D2" type="RayCast2D" parent="."]
+visible = false
+enabled = true
+cast_to = Vector2( 13, 0 )
+
+[node name="Area2D" type="Area2D" parent="."]
+visible = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource( 3 )
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 3.0
+
+[node name="Timer2" type="Timer" parent="."]
+wait_time = 5.0
+
+[node name="Timer3" type="Timer" parent="."]
+
+[node name="Timer4" type="Timer" parent="."]
+wait_time = 0.2
+
+[node name="Position2D" type="Position2D" parent="."]
+
+[node name="Timer5" type="Timer" parent="."]
+wait_time = 0.5
+
+[node name="Timer6" type="Timer" parent="."]
+wait_time = 0.01
+[connection signal="animation_finished" from="AnimatedSprite" to="." method="_on_AnimatedSprite_animation_finished"]
+[connection signal="body_entered" from="Area2D" to="." method="_on_Area2D_body_entered"]
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
+[connection signal="timeout" from="Timer2" to="." method="_on_Timer2_timeout"]
+[connection signal="timeout" from="Timer3" to="." method="_on_Timer3_timeout"]
+[connection signal="timeout" from="Timer4" to="." method="_on_Timer4_timeout"]
+[connection signal="timeout" from="Timer5" to="." method="_on_Timer5_timeout"]
+[connection signal="timeout" from="Timer6" to="." method="_on_Timer6_timeout"]
