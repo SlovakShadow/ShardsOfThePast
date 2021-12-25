@@ -1,0 +1,46 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Placeholder Textures for Shards of the Past/tileset_lab.png" type="Texture" id=1]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Wall 1" type="Sprite" parent="."]
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 176, 64, 16, 16 )
+
+[node name="Lockers Bottom" type="Sprite" parent="."]
+position = Vector2( 1, 25 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 224, 80, 16, 16 )
+
+[node name="Lockers Top" type="Sprite" parent="."]
+position = Vector2( 1, 9 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 224, 64, 16, 16 )
+
+[node name="Wall 2" type="Sprite" parent="."]
+position = Vector2( 22, 0 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 192, 64, 16, 16 )
+
+[node name="Wall 3" type="Sprite" parent="."]
+position = Vector2( 23, 24 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 208, 64, 16, 16 )
+
+[node name="Elevator 1" type="Sprite" parent="."]
+position = Vector2( 50, 2 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 224, 32, 32, 32 )
+
+[node name="UPJS Logo" type="Sprite" parent="."]
+position = Vector2( 50, 35 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 0, 64, 64, 64 )

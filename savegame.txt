@@ -1,0 +1,18 @@
+HP: 5
+MaxHP: 5
+Level: 2
+hBl: 3
+Shader1: 1
+tbBeaten: 
+fgBeaten: 
+bmBeaten: 
+levBeaten: 
+mine: 
+srlBeaten: 
+srlAmount: 0
+hp0taken: 
+hp1taken: 
+hp2taken: True
+hp3taken: 
+hp4taken: 
+

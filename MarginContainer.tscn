@@ -1,0 +1,47 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Placeholder Textures for Shards of the Past/health/HPtext.png" type="Texture" id=1]
+[ext_resource path="res://Placeholder Textures for Shards of the Past/health/health.png" type="Texture" id=2]
+
+[node name="MarginContainer" type="MarginContainer"]
+margin_left = -293.0
+margin_top = 75.0
+margin_right = -227.0
+margin_bottom = 86.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+margin_right = 66.0
+margin_bottom = 11.0
+
+[node name="Heart 5" type="Sprite" parent="HBoxContainer"]
+position = Vector2( 60, 5 )
+texture = ExtResource( 2 )
+offset = Vector2( 0.5, 0.5 )
+
+[node name="HPText" type="Sprite" parent="HBoxContainer"]
+position = Vector2( 5, 5 )
+texture = ExtResource( 1 )
+offset = Vector2( 0.5, 0.5 )
+
+[node name="Heart 1" type="Sprite" parent="HBoxContainer"]
+position = Vector2( 16, 5 )
+texture = ExtResource( 2 )
+offset = Vector2( 0.5, 0.5 )
+
+[node name="Heart 2" type="Sprite" parent="HBoxContainer"]
+position = Vector2( 27, 5 )
+texture = ExtResource( 2 )
+offset = Vector2( 0.5, 0.5 )
+
+[node name="Heart 3" type="Sprite" parent="HBoxContainer"]
+position = Vector2( 38, 5 )
+texture = ExtResource( 2 )
+offset = Vector2( 0.5, 0.5 )
+
+[node name="Heart 4" type="Sprite" parent="HBoxContainer"]
+position = Vector2( 49, 5 )
+texture = ExtResource( 2 )
+offset = Vector2( 0.5, 0.5 )

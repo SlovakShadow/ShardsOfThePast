@@ -1,0 +1,482 @@
+[gd_scene load_steps=40 format=2]
+
+[ext_resource path="res://Placeholder Textures for Shards of the Past/fierygoliath_healthbar/fierygoliath_healthbar_full.png" type="Texture" id=1]
+[ext_resource path="res://Placeholder Textures for Shards of the Past/health/health_bonus.png" type="Texture" id=2]
+[ext_resource path="res://Placeholder Textures for Shards of the Past/health/health_bonus_ubercharge.png" type="Texture" id=3]
+[ext_resource path="res://Placeholder Textures for Shards of the Past/health/health.png" type="Texture" id=4]
+[ext_resource path="res://Placeholder Textures for Shards of the Past/gui/abilitydisplay_punch.png" type="Texture" id=5]
+[ext_resource path="res://Placeholder Textures for Shards of the Past/blightpack/blightpack_healthbar_full.png" type="Texture" id=6]
+[ext_resource path="res://Placeholder Textures for Shards of the Past/gui/abilitydisplay_doublejump.png" type="Texture" id=7]
+[ext_resource path="res://Placeholder Textures for Shards of the Past/health/HPtext.png" type="Texture" id=8]
+[ext_resource path="res://Placeholder Textures for Shards of the Past/sotp_quit.png" type="Texture" id=9]
+[ext_resource path="res://Placeholder Textures for Shards of the Past/white.png" type="Texture" id=10]
+[ext_resource path="res://Placeholder Textures for Shards of the Past/sotp_quit_pressed.png" type="Texture" id=11]
+[ext_resource path="res://Placeholder Textures for Shards of the Past/CRTFrame.png" type="Texture" id=12]
+[ext_resource path="res://Placeholder Textures for Shards of the Past/dialogue/error.png" type="Texture" id=13]
+[ext_resource path="res://Placeholder Textures for Shards of the Past/achievements/extinguished_card.png" type="Texture" id=14]
+[ext_resource path="res://Placeholder Textures for Shards of the Past/sotp_play_pressed.png" type="Texture" id=15]
+[ext_resource path="res://Placeholder Textures for Shards of the Past/sotp_retry.png" type="Texture" id=16]
+[ext_resource path="res://Placeholder Textures for Shards of the Past/sign/text_background.png" type="Texture" id=17]
+[ext_resource path="res://Placeholder Textures for Shards of the Past/transitions/fadeout.png" type="Texture" id=18]
+[ext_resource path="res://Placeholder Textures for Shards of the Past/sotp_menu.png" type="Texture" id=19]
+[ext_resource path="res://Placeholder Textures for Shards of the Past/sotp_retry_pressed.png" type="Texture" id=20]
+[ext_resource path="res://Placeholder Textures for Shards of the Past/sotp_menu_pressed.png" type="Texture" id=21]
+[ext_resource path="res://Placeholder Textures for Shards of the Past/paused_text.png" type="Texture" id=22]
+[ext_resource path="res://damage.shader" type="Shader" id=23]
+[ext_resource path="res://CRTShader.shader" type="Shader" id=24]
+[ext_resource path="res://Placeholder Textures for Shards of the Past/player/jump/jump_1.png" type="Texture" id=25]
+[ext_resource path="res://Placeholder Textures for Shards of the Past/player/frag/takeout_2.png" type="Texture" id=26]
+[ext_resource path="res://Placeholder Textures for Shards of the Past/player/jump/jump_2.png" type="Texture" id=27]
+[ext_resource path="res://Placeholder Textures for Shards of the Past/player/frag/takeout_1.png" type="Texture" id=28]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 6, 9 )
+
+[sub_resource type="ShaderMaterial" id=2]
+shader = ExtResource( 23 )
+shader_param/flash_color = Color( 1, 1, 1, 1 )
+shader_param/flash_modifier = 0.0
+
+[sub_resource type="SpriteFrames" id=13]
+animations = [ {
+"frames": [ ExtResource( 27 ), ExtResource( 25 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 25 ), ExtResource( 28 ), ExtResource( 26 ), ExtResource( 27 ) ],
+"loop": true,
+"name": "frag",
+"speed": 5.0
+} ]
+
+[sub_resource type="ShaderMaterial" id=14]
+resource_local_to_scene = true
+shader = ExtResource( 23 )
+shader_param/flash_color = Color( 1, 1, 1, 1 )
+shader_param/flash_modifier = 0.0
+
+[sub_resource type="Shader" id=6]
+code = "shader_type canvas_item;
+
+uniform float BarrelPower = 1.1;
+
+vec2 distort(vec2 p) 
+{
+
+	float angle = p.y / p.x;
+	float theta = atan(p.y,p.x);
+	float radius = pow(length(p), BarrelPower);
+	
+	p.x = radius * cos(theta);
+	p.y = radius * sin(theta);
+	
+	return 0.5 * (p + vec2(1.0,1.0));
+}
+void fragment()
+{
+	
+vec2 xy = SCREEN_UV * 2.0;
+xy.x -= 1.0;
+xy.y -= 1.0;
+
+float d = length(xy);
+if(d < 1.5){
+	xy = distort(xy);
+}
+else{
+	xy = SCREEN_UV;
+}
+COLOR = texture(SCREEN_TEXTURE,xy);
+}
+
+
+
+"
+
+[sub_resource type="ShaderMaterial" id=7]
+shader = SubResource( 6 )
+shader_param/BarrelPower = 1.1
+
+[sub_resource type="Shader" id=8]
+code = "shader_type canvas_item;
+
+uniform float color_bleeding = 0.9;
+uniform float bleeding_range = 2;
+uniform float screen_width = 1024;
+void fragment()
+{
+	float pixel_size = 1.0/screen_width*bleeding_range;
+	vec4 color_left = texture(SCREEN_TEXTURE,SCREEN_UV - vec2(pixel_size, 0));
+	vec4 current_color = texture(SCREEN_TEXTURE,SCREEN_UV);
+	current_color = current_color*vec4(color_bleeding,0.5,0.25,1);
+	color_left = color_left*vec4(0.25,0.5,color_bleeding,1);
+	COLOR.rgba = (current_color + color_left);
+}"
+
+[sub_resource type="ShaderMaterial" id=9]
+shader = SubResource( 8 )
+shader_param/color_bleeding = 0.9
+shader_param/bleeding_range = 0.5
+shader_param/screen_width = 640.0
+
+[sub_resource type="Shader" id=10]
+code = "shader_type canvas_item;
+
+uniform float lines_distance = 4.0;
+uniform float pixel_size = 2.0;
+uniform float size_screen = 600;
+uniform float scanline_alpha = 0.9;
+uniform float lines_velocity = 30.0;
+
+void fragment()
+{
+	float line_row = floor((SCREEN_UV.y * size_screen/pixel_size) + mod(TIME*lines_velocity, lines_distance));
+
+	float n = 1.0 - ceil((mod(line_row,lines_distance)/lines_distance));
+
+vec4 c = texture(SCREEN_TEXTURE,SCREEN_UV);
+c = c - n*c*(1.0 - scanline_alpha);
+c.a = 1.0;
+COLOR = c;
+}"
+
+[sub_resource type="ShaderMaterial" id=11]
+shader = SubResource( 10 )
+shader_param/lines_distance = 4.0
+shader_param/pixel_size = 2.0
+shader_param/size_screen = 600.0
+shader_param/scanline_alpha = 0.9
+shader_param/lines_velocity = 30.0
+
+[sub_resource type="ShaderMaterial" id=12]
+shader = ExtResource( 24 )
+shader_param/BarrelPower = 1.05
+
+[node name="PlayerSkydive" type="RigidBody2D"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+margin_left = -144.0
+margin_top = -83.0
+margin_right = -78.0
+margin_bottom = -72.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+margin_right = 66.0
+margin_bottom = 11.0
+
+[node name="HPText" type="Sprite" parent="MarginContainer/HBoxContainer"]
+position = Vector2( 5, 5 )
+z_index = 15
+texture = ExtResource( 8 )
+offset = Vector2( 0.5, 0.5 )
+
+[node name="Heart_1" type="Sprite" parent="MarginContainer/HBoxContainer"]
+position = Vector2( 16, 5 )
+z_index = 15
+texture = ExtResource( 4 )
+offset = Vector2( 0.5, 0.5 )
+
+[node name="Heart_2" type="Sprite" parent="MarginContainer/HBoxContainer"]
+position = Vector2( 27, 5 )
+z_index = 15
+texture = ExtResource( 4 )
+offset = Vector2( 0.5, 0.5 )
+
+[node name="Heart_3" type="Sprite" parent="MarginContainer/HBoxContainer"]
+position = Vector2( 38, 5 )
+z_index = 15
+texture = ExtResource( 4 )
+offset = Vector2( 0.5, 0.5 )
+
+[node name="Heart_4" type="Sprite" parent="MarginContainer/HBoxContainer"]
+position = Vector2( 49, 5 )
+z_index = 15
+texture = ExtResource( 4 )
+offset = Vector2( 0.5, 0.5 )
+
+[node name="Heart_5" type="Sprite" parent="MarginContainer/HBoxContainer"]
+visible = false
+position = Vector2( 60, 5 )
+z_index = 15
+texture = ExtResource( 4 )
+offset = Vector2( 0.5, 0.5 )
+
+[node name="Heart_6" type="Sprite" parent="MarginContainer/HBoxContainer"]
+visible = false
+position = Vector2( 16, 17 )
+z_index = 15
+texture = ExtResource( 2 )
+offset = Vector2( 0.5, 0.5 )
+
+[node name="Heart_7" type="Sprite" parent="MarginContainer/HBoxContainer"]
+visible = false
+position = Vector2( 27, 17 )
+z_index = 15
+texture = ExtResource( 2 )
+offset = Vector2( 0.5, 0.5 )
+
+[node name="Heart_8" type="Sprite" parent="MarginContainer/HBoxContainer"]
+visible = false
+position = Vector2( 38, 17 )
+z_index = 15
+texture = ExtResource( 2 )
+offset = Vector2( 0.5, 0.5 )
+
+[node name="Heart_9" type="Sprite" parent="MarginContainer/HBoxContainer"]
+visible = false
+position = Vector2( 49, 17 )
+z_index = 15
+texture = ExtResource( 2 )
+offset = Vector2( 0.5, 0.5 )
+
+[node name="Heart_10" type="Sprite" parent="MarginContainer/HBoxContainer"]
+visible = false
+position = Vector2( 60, 17 )
+z_index = 15
+texture = ExtResource( 2 )
+offset = Vector2( 0.5, 0.5 )
+
+[node name="Heart_11" type="Sprite" parent="MarginContainer/HBoxContainer"]
+visible = false
+position = Vector2( 16, 29 )
+z_index = 15
+texture = ExtResource( 3 )
+offset = Vector2( 0.5, 0.5 )
+
+[node name="Heart_12" type="Sprite" parent="MarginContainer/HBoxContainer"]
+visible = false
+position = Vector2( 27, 29 )
+z_index = 15
+texture = ExtResource( 3 )
+offset = Vector2( 0.5, 0.5 )
+
+[node name="Heart_13" type="Sprite" parent="MarginContainer/HBoxContainer"]
+visible = false
+position = Vector2( 38, 29 )
+z_index = 15
+texture = ExtResource( 3 )
+offset = Vector2( 0.5, 0.5 )
+
+[node name="Boss_HB" type="Sprite" parent="MarginContainer/HBoxContainer"]
+visible = false
+position = Vector2( 144, 7 )
+z_index = 15
+texture = ExtResource( 1 )
+
+[node name="Boss_HB_2" type="Sprite" parent="MarginContainer/HBoxContainer"]
+visible = false
+position = Vector2( 144, 28 )
+z_index = 15
+texture = ExtResource( 6 )
+
+[node name="Active Ability" type="Sprite" parent="MarginContainer/HBoxContainer"]
+position = Vector2( 250, 8 )
+z_index = 15
+texture = ExtResource( 5 )
+
+[node name="Sign" type="Sprite" parent="MarginContainer/HBoxContainer"]
+visible = false
+position = Vector2( 144, 86 )
+z_index = 15
+texture = ExtResource( 17 )
+
+[node name="Dialogue" type="Sprite" parent="MarginContainer/HBoxContainer"]
+visible = false
+position = Vector2( 145, 140 )
+z_index = 15
+texture = ExtResource( 13 )
+
+[node name="Active Movement Ability" type="Sprite" parent="MarginContainer/HBoxContainer"]
+position = Vector2( 262, 42 )
+z_index = 15
+texture = ExtResource( 7 )
+
+[node name="Achievement" type="Sprite" parent="MarginContainer/HBoxContainer"]
+visible = false
+position = Vector2( 256, 6 )
+z_index = 15
+texture = ExtResource( 14 )
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="."]
+position = Vector2( 0, 10 )
+shape = SubResource( 1 )
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+material = SubResource( 2 )
+position = Vector2( 0, 8 )
+scale = Vector2( 0.9, 0.92618 )
+frames = SubResource( 13 )
+animation = "frag"
+frame = 2
+playing = true
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2( 0, -3 )
+current = true
+smoothing_speed = 50.0
+
+[node name="Shader" type="Node2D" parent="."]
+position = Vector2( 0, -3 )
+z_index = 25
+
+[node name="Control" type="Control" parent="Shader"]
+margin_left = -158.533
+margin_top = -91.3579
+margin_right = -118.533
+margin_bottom = -51.3579
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Shaders" type="Control" parent="Shader/Control"]
+margin_right = 40.0
+margin_bottom = 40.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Damage" type="TextureRect" parent="Shader/Control/Shaders"]
+visible = false
+material = SubResource( 14 )
+margin_left = 140.0
+margin_top = 83.0
+margin_right = 180.0
+margin_bottom = 123.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Curvature" type="TextureRect" parent="Shader/Control/Shaders"]
+visible = false
+material = SubResource( 7 )
+margin_right = 320.0
+margin_bottom = 180.0
+texture = ExtResource( 10 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorBleeding" type="TextureRect" parent="Shader/Control/Shaders"]
+visible = false
+material = SubResource( 9 )
+margin_right = 320.0
+margin_bottom = 180.0
+texture = ExtResource( 10 )
+expand = true
+
+[node name="ScanLine" type="TextureRect" parent="Shader/Control/Shaders"]
+visible = false
+material = SubResource( 11 )
+margin_top = 1.0
+margin_right = 320.0
+margin_bottom = 180.0
+texture = ExtResource( 10 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CRT" type="TextureRect" parent="Shader/Control/Shaders"]
+material = SubResource( 12 )
+margin_right = 320.0
+margin_bottom = 180.0
+texture = ExtResource( 10 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CRTFrame" type="TextureRect" parent="Shader/Control"]
+margin_left = -1.467
+margin_top = 0.357903
+margin_right = 338.533
+margin_bottom = 246.358
+rect_scale = Vector2( 0.946396, 0.738916 )
+texture = ExtResource( 12 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MarginContainer2" type="MarginContainer" parent="."]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -63.0
+margin_top = -55.0
+margin_right = 63.0
+margin_bottom = 101.0
+custom_constants/margin_right = 20
+custom_constants/margin_top = 20
+custom_constants/margin_left = 20
+custom_constants/margin_bottom = 60
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer2"]
+margin_left = 20.0
+margin_top = 20.0
+margin_right = 106.0
+margin_bottom = 96.0
+size_flags_horizontal = 4
+size_flags_vertical = 8
+
+[node name="TextureButton" type="TextureButton" parent="MarginContainer2/VBoxContainer"]
+margin_right = 86.0
+margin_bottom = 16.0
+mouse_default_cursor_shape = 2
+texture_normal = ExtResource( 22 )
+texture_pressed = ExtResource( 15 )
+
+[node name="TextureButton2" type="TextureButton" parent="MarginContainer2/VBoxContainer"]
+margin_top = 20.0
+margin_right = 86.0
+margin_bottom = 36.0
+mouse_default_cursor_shape = 2
+texture_normal = ExtResource( 16 )
+texture_pressed = ExtResource( 20 )
+
+[node name="TextureButton3" type="TextureButton" parent="MarginContainer2/VBoxContainer"]
+margin_top = 40.0
+margin_right = 86.0
+margin_bottom = 56.0
+mouse_default_cursor_shape = 2
+texture_normal = ExtResource( 19 )
+texture_pressed = ExtResource( 21 )
+
+[node name="TextureButton4" type="TextureButton" parent="MarginContainer2/VBoxContainer"]
+margin_top = 60.0
+margin_right = 86.0
+margin_bottom = 76.0
+mouse_default_cursor_shape = 2
+texture_normal = ExtResource( 9 )
+texture_pressed = ExtResource( 11 )
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+visible = false
+margin_left = -75.0
+margin_top = -86.0
+margin_right = 77.0
+margin_bottom = 78.0
+text = "0"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Music" type="AudioStreamPlayer2D" parent="."]
+volume_db = -1.0
+autoplay = true
+
+[node name="Transition" type="Sprite" parent="."]
+visible = false
+position = Vector2( 1, -3 )
+scale = Vector2( 20.25, 11.5 )
+z_index = 15
+texture = ExtResource( 18 )

@@ -1,0 +1,27 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Placeholder Textures for Shards of the Past/plasmaball/particle.png" type="Texture" id=1]
+
+[sub_resource type="ParticlesMaterial" id=1]
+emission_shape = 1
+emission_sphere_radius = 3.59
+flag_disable_z = true
+direction = Vector3( 0, -5, 0 )
+gravity = Vector3( 0, 25, 0 )
+initial_velocity = 25.0
+initial_velocity_random = 0.74
+angular_velocity = 5.0
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Particles2D" type="Particles2D" parent="."]
+z_index = 1
+lifetime = 2.0
+preprocess = 5.0
+speed_scale = 1.42
+explosiveness = 0.19
+randomness = 0.4
+process_material = SubResource( 1 )
+texture = ExtResource( 1 )

@@ -1,0 +1,236 @@
+[gd_scene load_steps=16 format=2]
+
+[ext_resource path="res://CRTShader.shader" type="Shader" id=1]
+[ext_resource path="res://Placeholder Textures for Shards of the Past/white.png" type="Texture" id=2]
+[ext_resource path="res://Placeholder Textures for Shards of the Past/CRTFrame.png" type="Texture" id=3]
+[ext_resource path="res://Placeholder Textures for Shards of the Past/sotp_startscreen_nologo.png" type="Texture" id=4]
+[ext_resource path="res://Placeholder Textures for Shards of the Past/sotp_back.png" type="Texture" id=5]
+[ext_resource path="res://Placeholder Textures for Shards of the Past/sotp_back_pressed.png" type="Texture" id=6]
+[ext_resource path="res://Placeholder Textures for Shards of the Past/tvoverlay_on.png" type="Texture" id=7]
+[ext_resource path="res://TitleScreen.gd" type="Script" id=9]
+
+[sub_resource type="Shader" id=1]
+code = "shader_type canvas_item;
+
+uniform float BarrelPower = 1.1;
+
+vec2 distort(vec2 p) 
+{
+
+	float angle = p.y / p.x;
+	float theta = atan(p.y,p.x);
+	float radius = pow(length(p), BarrelPower);
+	
+	p.x = radius * cos(theta);
+	p.y = radius * sin(theta);
+	
+	return 0.5 * (p + vec2(1.0,1.0));
+}
+void fragment()
+{
+	
+vec2 xy = SCREEN_UV * 2.0;
+xy.x -= 1.0;
+xy.y -= 1.0;
+
+float d = length(xy);
+if(d < 1.5){
+	xy = distort(xy);
+}
+else{
+	xy = SCREEN_UV;
+}
+COLOR = texture(SCREEN_TEXTURE,xy);
+}
+
+
+
+"
+
+[sub_resource type="ShaderMaterial" id=2]
+shader = SubResource( 1 )
+shader_param/BarrelPower = 1.1
+
+[sub_resource type="Shader" id=3]
+code = "shader_type canvas_item;
+
+uniform float color_bleeding = 0.9;
+uniform float bleeding_range = 2;
+uniform float screen_width = 1024;
+void fragment()
+{
+	float pixel_size = 1.0/screen_width*bleeding_range;
+	vec4 color_left = texture(SCREEN_TEXTURE,SCREEN_UV - vec2(pixel_size, 0));
+	vec4 current_color = texture(SCREEN_TEXTURE,SCREEN_UV);
+	current_color = current_color*vec4(color_bleeding,0.5,0.25,1);
+	color_left = color_left*vec4(0.25,0.5,color_bleeding,1);
+	COLOR.rgba = (current_color + color_left);
+}"
+
+[sub_resource type="ShaderMaterial" id=4]
+shader = SubResource( 3 )
+shader_param/color_bleeding = 0.9
+shader_param/bleeding_range = 2.0
+shader_param/screen_width = 1024.0
+
+[sub_resource type="Shader" id=5]
+code = "shader_type canvas_item;
+
+uniform float lines_distance = 4.0;
+uniform float pixel_size = 2.0;
+uniform float size_screen = 600;
+uniform float scanline_alpha = 0.9;
+uniform float lines_velocity = 30.0;
+
+void fragment()
+{
+	float line_row = floor((SCREEN_UV.y * size_screen/pixel_size) + mod(TIME*lines_velocity, lines_distance));
+
+	float n = 1.0 - ceil((mod(line_row,lines_distance)/lines_distance));
+
+vec4 c = texture(SCREEN_TEXTURE,SCREEN_UV);
+c = c - n*c*(1.0 - scanline_alpha);
+c.a = 1.0;
+COLOR = c;
+}"
+
+[sub_resource type="ShaderMaterial" id=6]
+shader = SubResource( 5 )
+shader_param/lines_distance = 4.0
+shader_param/pixel_size = 2.0
+shader_param/size_screen = 600.0
+shader_param/scanline_alpha = 0.9
+shader_param/lines_velocity = 30.0
+
+[sub_resource type="ShaderMaterial" id=7]
+shader = ExtResource( 1 )
+shader_param/BarrelPower = 1.05
+
+[node name="settings" type="Node2D"]
+script = ExtResource( 9 )
+
+[node name="Sprite" type="Sprite" parent="."]
+position = Vector2( 160, 90 )
+texture = ExtResource( 4 )
+
+[node name="Control" type="Control" parent="."]
+margin_left = -158.533
+margin_top = -91.3579
+margin_right = -118.533
+margin_bottom = -51.3579
+mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Shaders" type="Control" parent="Control"]
+margin_right = 40.0
+margin_bottom = 40.0
+mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Curvature" type="TextureRect" parent="Control/Shaders"]
+visible = false
+material = SubResource( 2 )
+margin_right = 320.0
+margin_bottom = 180.0
+texture = ExtResource( 2 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorBleeding" type="TextureRect" parent="Control/Shaders"]
+visible = false
+material = SubResource( 4 )
+margin_left = 146.533
+margin_top = 63.3579
+margin_right = 490.533
+margin_bottom = 219.358
+texture = ExtResource( 2 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ScanLine" type="TextureRect" parent="Control/Shaders"]
+material = SubResource( 6 )
+margin_left = 158.533
+margin_top = 92.3579
+margin_right = 478.533
+margin_bottom = 271.358
+texture = ExtResource( 2 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CRT" type="TextureRect" parent="Control/Shaders"]
+material = SubResource( 7 )
+margin_left = 158.533
+margin_top = 91.3579
+margin_right = 478.533
+margin_bottom = 271.358
+texture = ExtResource( 2 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CRTFrame" type="TextureRect" parent="Control"]
+margin_left = 159.0
+margin_top = 90.0
+margin_right = 497.0
+margin_bottom = 336.0
+rect_scale = Vector2( 0.946396, 0.738916 )
+mouse_filter = 2
+texture = ExtResource( 3 )
+expand = true
+stretch_mode = 4
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -31.7741
+margin_top = -32.0
+margin_right = 352.226
+margin_bottom = 192.0
+custom_constants/margin_right = 20
+custom_constants/margin_top = 20
+custom_constants/margin_left = 20
+custom_constants/margin_bottom = 60
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+margin_left = 128.0
+margin_top = 120.0
+margin_right = 256.0
+margin_bottom = 164.0
+size_flags_horizontal = 4
+size_flags_vertical = 8
+
+[node name="TextureButton4" type="TextureButton" parent="MarginContainer/VBoxContainer"]
+margin_right = 128.0
+margin_bottom = 20.0
+mouse_default_cursor_shape = 2
+action_mode = 0
+texture_normal = ExtResource( 7 )
+texture_pressed = ExtResource( 7 )
+
+[node name="back" type="TextureButton" parent="MarginContainer/VBoxContainer"]
+margin_top = 24.0
+margin_right = 128.0
+margin_bottom = 44.0
+mouse_default_cursor_shape = 2
+action_mode = 0
+texture_normal = ExtResource( 5 )
+texture_pressed = ExtResource( 6 )
+[connection signal="pressed" from="MarginContainer/VBoxContainer/TextureButton4" to="." method="_on_TextureButton4_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/back" to="." method="_on_back_pressed"]

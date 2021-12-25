@@ -1,0 +1,130 @@
+[gd_scene load_steps=36 format=2]
+
+[ext_resource path="res://Placeholder Textures for Shards of the Past/leviathan/leviathan_idle_3.png" type="Texture" id=1]
+[ext_resource path="res://Placeholder Textures for Shards of the Past/leviathan/leviathan_idle_4.png" type="Texture" id=2]
+[ext_resource path="res://Placeholder Textures for Shards of the Past/leviathan/leviathan_idle_1.png" type="Texture" id=3]
+[ext_resource path="res://Placeholder Textures for Shards of the Past/leviathan/leviathan_idle_2.png" type="Texture" id=4]
+[ext_resource path="res://Placeholder Textures for Shards of the Past/leviathan/leviathan_pulse_2.png" type="Texture" id=5]
+[ext_resource path="res://Placeholder Textures for Shards of the Past/leviathan/leviathan_pulse_1.png" type="Texture" id=6]
+[ext_resource path="res://Placeholder Textures for Shards of the Past/leviathan/leviathan_pulse_3.png" type="Texture" id=7]
+[ext_resource path="res://Placeholder Textures for Shards of the Past/leviathan/leviathan_pulse_4.png" type="Texture" id=8]
+[ext_resource path="res://Placeholder Textures for Shards of the Past/leviathan/leviathan_minibreach_4.png" type="Texture" id=9]
+[ext_resource path="res://Placeholder Textures for Shards of the Past/leviathan/leviathan_minibreach_5.png" type="Texture" id=10]
+[ext_resource path="res://Placeholder Textures for Shards of the Past/leviathan/leviathan_minibreach_7.png" type="Texture" id=11]
+[ext_resource path="res://Placeholder Textures for Shards of the Past/leviathan/leviathan_minibreach_2.png" type="Texture" id=12]
+[ext_resource path="res://Placeholder Textures for Shards of the Past/leviathan/leviathan_minibreach_6.png" type="Texture" id=13]
+[ext_resource path="res://Placeholder Textures for Shards of the Past/leviathan/leviathan_minibreach_8.png" type="Texture" id=14]
+[ext_resource path="res://Placeholder Textures for Shards of the Past/leviathan/leviathan_minibreach_3.png" type="Texture" id=15]
+[ext_resource path="res://Placeholder Textures for Shards of the Past/leviathan/leviathan_minibreach_1.png" type="Texture" id=16]
+[ext_resource path="res://LeviPath.gd" type="Script" id=17]
+[ext_resource path="res://LeviHurt.gd" type="Script" id=18]
+[ext_resource path="res://Placeholder Textures for Shards of the Past/leviathan/pulse.png" type="Texture" id=19]
+[ext_resource path="res://Placeholder Textures for Shards of the Past/leviathan/leviathan_death_1.png" type="Texture" id=20]
+[ext_resource path="res://Placeholder Textures for Shards of the Past/leviathan/leviathan_death_2.png" type="Texture" id=21]
+[ext_resource path="res://Placeholder Textures for Shards of the Past/leviathan/leviathan_death_3.png" type="Texture" id=22]
+[ext_resource path="res://Placeholder Textures for Shards of the Past/leviathan/leviathan_death_5.png" type="Texture" id=23]
+[ext_resource path="res://Placeholder Textures for Shards of the Past/leviathan/leviathan_death_4.png" type="Texture" id=24]
+[ext_resource path="res://Placeholder Textures for Shards of the Past/leviathan/leviathan_death_6.png" type="Texture" id=25]
+[ext_resource path="res://Placeholder Textures for Shards of the Past/leviathan/leviathan_death_7.png" type="Texture" id=26]
+[ext_resource path="res://Placeholder Textures for Shards of the Past/leviathan/leviathan_death_9.png" type="Texture" id=27]
+[ext_resource path="res://Placeholder Textures for Shards of the Past/leviathan/leviathan_death_12.png" type="Texture" id=28]
+[ext_resource path="res://Placeholder Textures for Shards of the Past/leviathan/leviathan_death_11.png" type="Texture" id=29]
+[ext_resource path="res://Placeholder Textures for Shards of the Past/leviathan/leviathan_death_10.png" type="Texture" id=30]
+[ext_resource path="res://Placeholder Textures for Shards of the Past/leviathan/leviathan_death_8.png" type="Texture" id=31]
+[ext_resource path="res://Placeholder Textures for Shards of the Past/leviathan/leviathan_death_13.png" type="Texture" id=32]
+
+[sub_resource type="SpriteFrames" id=1]
+animations = [ {
+"frames": [ ExtResource( 3 ), ExtResource( 4 ), ExtResource( 1 ), ExtResource( 2 ) ],
+"loop": true,
+"name": "idle",
+"speed": 6.0
+}, {
+"frames": [ ExtResource( 6 ), ExtResource( 5 ), ExtResource( 7 ), ExtResource( 8 ) ],
+"loop": true,
+"name": "pulse",
+"speed": 6.0
+}, {
+"frames": [ ExtResource( 20 ), ExtResource( 21 ), ExtResource( 22 ), ExtResource( 24 ), ExtResource( 23 ), ExtResource( 25 ), ExtResource( 26 ), ExtResource( 31 ), ExtResource( 27 ), ExtResource( 30 ), ExtResource( 29 ), ExtResource( 28 ), ExtResource( 32 ) ],
+"loop": false,
+"name": "death",
+"speed": 6.0
+}, {
+"frames": [ ExtResource( 16 ), ExtResource( 12 ), ExtResource( 15 ), ExtResource( 9 ), ExtResource( 10 ), ExtResource( 13 ), ExtResource( 10 ), ExtResource( 13 ), ExtResource( 10 ), ExtResource( 13 ), ExtResource( 10 ), ExtResource( 13 ), ExtResource( 11 ), ExtResource( 14 ) ],
+"loop": true,
+"name": "minibreach",
+"speed": 6.0
+} ]
+
+[sub_resource type="CapsuleShape2D" id=2]
+radius = 12.0
+height = 22.0
+
+[sub_resource type="CircleShape2D" id=3]
+
+[node name="Leviathan" type="PathFollow2D"]
+script = ExtResource( 17 )
+
+[node name="Position2D3" type="Position2D" parent="."]
+
+[node name="Leviathan" type="KinematicBody2D" parent="."]
+script = ExtResource( 18 )
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="Leviathan"]
+frames = SubResource( 1 )
+animation = "idle"
+playing = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Leviathan"]
+position = Vector2( 0, 2 )
+shape = SubResource( 2 )
+
+[node name="Position2D" type="Position2D" parent="Leviathan"]
+position = Vector2( -18, -4 )
+
+[node name="Position2D2" type="Position2D" parent="Leviathan"]
+position = Vector2( 18, -4 )
+
+[node name="SonicWaveTimer" type="Timer" parent="."]
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+visible = false
+margin_left = -37.0
+margin_top = -18.0
+margin_right = 3.0
+margin_bottom = 22.0
+visible_characters = 100
+text = "0"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PulseTimer" type="Timer" parent="."]
+wait_time = 0.222
+
+[node name="Area2D" type="Area2D" parent="."]
+visible = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource( 3 )
+
+[node name="Sprite" type="Sprite" parent="Area2D"]
+z_index = -1
+texture = ExtResource( 19 )
+
+[node name="Fallback" type="Timer" parent="."]
+wait_time = 0.01
+
+[node name="Fallback2" type="Timer" parent="."]
+wait_time = 0.01
+
+[node name="DeathTimer" type="Timer" parent="."]
+wait_time = 2.0
+[connection signal="animation_finished" from="Leviathan/AnimatedSprite" to="." method="_on_AnimatedSprite_animation_finished"]
+[connection signal="timeout" from="SonicWaveTimer" to="." method="_on_SonicWaveTimer_timeout"]
+[connection signal="timeout" from="SonicWaveTimer" to="Leviathan" method="_on_SonicWaveTimer_timeout"]
+[connection signal="timeout" from="PulseTimer" to="." method="_on_PulseTimer_timeout"]
+[connection signal="body_entered" from="Area2D" to="." method="_on_Area2D_body_entered"]
+[connection signal="timeout" from="Fallback" to="." method="_on_Fallback_timeout"]
+[connection signal="timeout" from="Fallback2" to="." method="_on_Fallback2_timeout"]
+[connection signal="timeout" from="DeathTimer" to="." method="_on_DeathTimer_timeout"]

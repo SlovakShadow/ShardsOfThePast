@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Placeholder Textures for Shards of the Past/military_truck.png" type="Texture" id=1]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Sprite" type="Sprite" parent="."]
+texture = ExtResource( 1 )
+offset = Vector2( 0, 0.5 )
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
+polygon = PoolVector2Array( -46, -33, 93, -33, 93, 14, 95, 14, 95, 23, 86, 23, 82, 32, 77, 34, -81, 34, -95, 23, -95, 0, -88, -16, -92, -16, -87, -25, -78, -29, -58, -29 )

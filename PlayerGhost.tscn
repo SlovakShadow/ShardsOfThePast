@@ -1,0 +1,21 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://Placeholder Textures for Shards of the Past/player/ghost/player_ghost_1.png" type="Texture" id=1]
+[ext_resource path="res://Placeholder Textures for Shards of the Past/player/ghost/player_ghost_4.png" type="Texture" id=2]
+[ext_resource path="res://Placeholder Textures for Shards of the Past/player/ghost/player_ghost_2.png" type="Texture" id=3]
+[ext_resource path="res://Placeholder Textures for Shards of the Past/player/ghost/player_ghost_3.png" type="Texture" id=4]
+[ext_resource path="res://PlayerGhost.gd" type="Script" id=5]
+
+[sub_resource type="SpriteFrames" id=1]
+animations = [ {
+"frames": [ ExtResource( 1 ), ExtResource( 3 ), ExtResource( 4 ), ExtResource( 2 ) ],
+"loop": true,
+"name": "default",
+"speed": 4.0
+} ]
+
+[node name="PlayerGhost" type="AnimatedSprite"]
+frames = SubResource( 1 )
+playing = true
+script = ExtResource( 5 )
+[connection signal="animation_finished" from="." to="." method="_on_PlayerGhost_animation_finished"]
